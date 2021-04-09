@@ -7,6 +7,7 @@ export class Map extends React.Component {
         this.state = {
             highlighted: "il"
         };
+        this.svgMap = React.createRef();
     }
     
     setHighlight(usState) {
@@ -15,10 +16,15 @@ export class Map extends React.Component {
         });
     }
 
+    componentDidMount() {
+        var path = document.getElementsByClassName('il')[0];
+        path.classList.add('highlighted');
+    }
+
     render() {
         return (
             <div>
-                <UsSvg />
+                <UsSvg ref={this.svgMap}/>
             </div>
         );
     }
