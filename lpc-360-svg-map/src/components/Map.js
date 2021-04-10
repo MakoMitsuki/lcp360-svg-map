@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { ReactComponent as UsSvg } from "../data/map.svg";
 
 export class StateList extends React.Component {
@@ -10,7 +10,7 @@ export class StateList extends React.Component {
     }
 
     componentDidMount () {
-        fetch("http://localhost:3001/fetchData")
+        fetch("/fetchData")
         .then( response => response.json())
         .then(
             (result) => {
