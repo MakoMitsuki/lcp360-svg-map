@@ -1,6 +1,23 @@
 import React from "react";
 import { ReactComponent as UsSvg } from "../data/map.svg";
 
+export class SelectBox extends React.Component {
+    render() {
+        return (
+            <div className="col-3 selectRangeDD">
+                <label>User Visits</label>
+                <select onChange={this.setHighlight}>
+                    <option disabled selected>Select One</option>
+                    <option value="0">0-250</option>
+                    <option value="1">250-500</option>
+                    <option value="2">500-1000</option>
+                    <option value="3">1000+</option>
+                </select>
+            </div>
+        )
+    }
+}
+
 export class Map extends React.Component {
     constructor(props) {
         super(props);
@@ -29,6 +46,7 @@ export class Map extends React.Component {
     }
 
     async updateMap () {
+        // RESET MAP
         this.state.prevHighlighted.forEach(function (st) {
             try {
                 document.getElementsByClassName(st.toLowerCase())[0].classList.remove('highlighted');
@@ -37,6 +55,7 @@ export class Map extends React.Component {
                 // in case of those not in map
             }
         });
+        // HIGHLIGHT
         this.state.highlighted.forEach(function (st) {
             try {
                 document.getElementsByClassName(st.toLowerCase())[0].classList.add('highlighted');
@@ -54,14 +73,10 @@ export class Map extends React.Component {
     render() {
         return (
             <div>
-                <select onChange={this.setHighlight}>
-                    <option disabled selected>Select One</option>
-                    <option value="0">0-250</option>
-                    <option value="1">250-500</option>
-                    <option value="2">500-1000</option>
-                    <option value="3">1000+</option>
-                </select>
-                <div id="mapContainer">
+                <div className="row">
+                    <SelectBox changeHandler={this.setHighlight} />
+                </div>
+                <div className="row mapContainer">
                     <UsSvg ref={this.svgMap}/>
                 </div>
             </div>

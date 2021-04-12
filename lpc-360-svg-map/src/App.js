@@ -1,4 +1,5 @@
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Map } from "./components/Map.js";
 import { ReactComponent as PanoskinLogo } from "./data/logo.svg";
 
@@ -6,10 +7,14 @@ function App() {
   
   return (
     <div id="container">
-      <div id="header">
-        <PanoskinLogo />
+      <div className="header">
+        <div className="col-2">
+          <PanoskinLogo/>
+        </div>
       </div>
-      <Map />
+      <div className="interactiveContainer">
+        <Map />
+      </div>
     </div>
 
   );
