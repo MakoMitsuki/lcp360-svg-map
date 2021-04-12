@@ -6,7 +6,7 @@ export class SelectBox extends React.Component {
         return (
             <div className="col-3 selectRangeDD">
                 <label>User Visits</label>
-                <select onChange={this.setHighlight}>
+                <select onChange={this.props.changeHandler}>
                     <option disabled selected>Select One</option>
                     <option value="0">0-250</option>
                     <option value="1">250-500</option>
@@ -34,11 +34,29 @@ export class Map extends React.Component {
         this.setState({
             prevHighlighted: this.state.highlighted
         })
-        await fetch(`/fetchRange/${event.target.value}`)
-        .then( response => response.json())
-        .then(
-            (result) => {
-                this.setState({
+
+        await fetch(`/fetchData`).then( response => response.json()).then(
+            (fetchedData) => {
+                let range = event.target.value;
+                let result = [];
+                if(range === "0") {
+                    // 0 - 250
+                    result = fetchedData.filter(usState => usState.visits >= 0 && usState.visits <= 250).map(usState => usState.id);
+                 }
+                 if(range === "1") {
+                   // 250 - 500
+                   result = fetchedData.filter(usState => usState.visits >= 250 && usState.visits <= 500).map(usState => usState.id);
+                 }
+                 if(range === "2") {
+                   // 500 - 1000
+                   result = fetchedData.filter(usState => usState.visits >= 500 && usState.visits <= 1000).map(usState => usState.id);
+                 }
+                 if(range === "3") {
+                   // 1000+
+                   result = fetchedData.filter(usState => usState.visits >= 1000).map(usState => usState.id);
+                 }
+
+                 this.setState({
                     highlighted : result
                 });
             }
